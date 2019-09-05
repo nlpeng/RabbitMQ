@@ -25,7 +25,9 @@ public class TaskSchedulerConfig implements SchedulingConfigurer {
 
     @Bean(destroyMethod="shutdown")
     public Executor taskScheduler(){
-        return Executors.newScheduledThreadPool(100);//创建一个线程池
+
+        //return Executors.newFixedThreadPool(100);//创建一个线程池  固定线程数
+        return Executors.newScheduledThreadPool(100);//创建一个线程池 核心线程 数定期执行任务，支持固定频率和固定延迟
     }
 
 }

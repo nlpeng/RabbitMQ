@@ -17,13 +17,12 @@ import com.nlpeng.producer.RabbitOrderSender;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
 
 
-@Service
+@Component
 public class RetryMessageTasker {
 
 
@@ -32,8 +31,8 @@ public class RetryMessageTasker {
 
     @Autowired
     private BrokerMessageLogMapper brokerMessageLogMapper;
-
-    @Scheduled(initialDelay = 5000, fixedDelay = 10000)
+    //https://www.jianshu.com/p/1defb0f22ed1  参考@Scheduled
+    @Scheduled(initialDelay = 5000, fixedDelay = 10000)//第一次延迟5秒后执行，之后按fixedRate的规则每10秒执行一次
     public void reSend(){
         //pull status = 0 and timeout message
         List<BrokerMessageLog> list = brokerMessageLogMapper.query4StatusAndTimeoutMessage();
