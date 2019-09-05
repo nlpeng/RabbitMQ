@@ -18,8 +18,8 @@ import com.alibaba.druid.pool.DruidDataSource;
  * @see
  * @since 1.0v
  **/
-@Configuration
-@EnableTransactionManagement
+@Configuration//配置文件
+@EnableTransactionManagement//事务注解
 public class DruidDataSourceConfig {
 
     private static Logger logger = LoggerFactory.getLogger(DruidDataSourceConfig.class);
@@ -62,7 +62,7 @@ public class DruidDataSourceConfig {
     @Bean
     public PlatformTransactionManager transactionManager() throws Exception {
         DataSourceTransactionManager txManager = new DataSourceTransactionManager();
-        txManager.setDataSource(dataSource());
+        txManager.setDataSource(dataSource());//开启事务
         return txManager;
     }
 

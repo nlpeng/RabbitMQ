@@ -15,7 +15,7 @@ import org.springframework.scheduling.annotation.SchedulingConfigurer;
 import org.springframework.scheduling.config.ScheduledTaskRegistrar;
 
 @Configuration
-@EnableScheduling
+@EnableScheduling//定时任务
 public class TaskSchedulerConfig implements SchedulingConfigurer {
 
     @Override
@@ -25,7 +25,7 @@ public class TaskSchedulerConfig implements SchedulingConfigurer {
 
     @Bean(destroyMethod="shutdown")
     public Executor taskScheduler(){
-        return Executors.newScheduledThreadPool(100);
+        return Executors.newScheduledThreadPool(100);//创建一个线程池
     }
 
 }

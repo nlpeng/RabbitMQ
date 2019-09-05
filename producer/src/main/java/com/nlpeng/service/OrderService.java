@@ -39,7 +39,7 @@ public class OrderService {
         // 使用当前时间当做订单创建时间（为了模拟一下简化）
         Date orderTime = new Date();
         // 插入业务数据
-        orderMapper.insert(order);
+        orderMapper.insertSelective(order);
         // 插入消息记录表数据
         BrokerMessageLog brokerMessageLog = new BrokerMessageLog();
         // 消息唯一ID
@@ -52,7 +52,7 @@ public class OrderService {
         brokerMessageLog.setNextRetry(DateUtils.addMinutes(orderTime, Constants.ORDER_TIMEOUT));
         brokerMessageLog.setCreateTime(new Date());
         brokerMessageLog.setUpdateTime(new Date());
-        brokerMessageLogMapper.insert(brokerMessageLog);
+        brokerMessageLogMapper.insertSelective(brokerMessageLog);
         // 发送消息
         rabbitOrderSender.sendOrder(order);
     }

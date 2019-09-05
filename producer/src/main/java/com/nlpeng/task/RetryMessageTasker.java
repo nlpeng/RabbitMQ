@@ -7,6 +7,7 @@ package com.nlpeng.task;
  * @since 1.0v
  **/
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.nlpeng.constant.Constants;
 import com.nlpeng.entity.BrokerMessageLog;
@@ -38,12 +39,14 @@ public class RetryMessageTasker {
         List<BrokerMessageLog> list = brokerMessageLogMapper.query4StatusAndTimeoutMessage();
         list.forEach(messageLog -> {
             if(messageLog.getTryCount() >= 3){
+                System.err.println("大于3次了");
                 //update fail message
                 brokerMessageLogMapper.changeBrokerMessageLogStatus(messageLog.getMessageId(), Constants.ORDER_SEND_FAILURE, new Date());
             } else {
+                System.err.println("重新尝试");
                 // resend
                 brokerMessageLogMapper.update4ReSend(messageLog.getMessageId(),  new Date());
-                Order reSendOrder = JSONObject.parseObject(messageLog.getMessage(), Order.class);
+                Order reSendOrder = JSON.parseObject(messageLog.getMessage(), Order.class);
                // Order reSendOrder = FastJsonConvertUtil.convertJSONToObject(messageLog.getMessage(), Order.class);
                 try {
                     rabbitOrderSender.sendOrder(reSendOrder);

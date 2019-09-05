@@ -13,8 +13,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@AutoConfigureAfter(MybatisDataSourceConfig.class)
-public class MybatisMapperScanerConfig {
+@AutoConfigureAfter(MybatisDataSourceConfig.class)//在这之后加载在加载this类
+public class MybatisMapperScannerConfig {
 
     @Bean
     public MapperScannerConfigurer mapperScannerConfigurer() {

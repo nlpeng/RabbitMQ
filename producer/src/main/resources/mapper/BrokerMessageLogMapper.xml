@@ -197,7 +197,7 @@
     </if>
   </update>
 
-
+  <!--将此类符号不进行解析-->
   <select id="query4StatusAndTimeoutMessage"
           resultMap="BaseResultMap">
           <![CDATA[
